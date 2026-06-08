@@ -1,0 +1,17 @@
+{
+  "terminal.integrated.env.windows": {
+    "PATH": "C:\\Program Files\\nodejs;${env:PATH}"
+  },
+  "terminal.integrated.profiles.windows": {
+    "PowerShell (Node.js)": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell",
+      "args": [
+        "-NoExit",
+        "-File",
+        "${workspaceFolder}\\.vscode\\iniciar-terminal.ps1"
+      ]
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "PowerShell (Node.js)"
+}

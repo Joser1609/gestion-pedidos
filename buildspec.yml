@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - npm ci
+
+  pre_build:
+    commands:
+      - npm test
+
+  build:
+    commands:
+      - docker build -t gestion-pedidos:$CODEBUILD_RESOLVED_SOURCE_VERSION .
+      - docker tag gestion-pedidos:$CODEBUILD_RESOLVED_SOURCE_VERSION $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/gestion-pedidos:latest
+
+  post_build:
+    commands:
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/gestion-pedidos:latest
+      - printf '[{"name":"gestion-pedidos","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/gestion-pedidos:latest > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
+    - infrastructure/**/*
+
+cache:
+  paths:
+    - node_modules/**/*

@@ -1,0 +1,60 @@
+{
+  "info": {
+    "name": "Pedidos API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Listar pedidos",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/pedidos"
+      }
+    },
+    {
+      "name": "Crear pedido",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"cliente\": {\n    \"nombre\": \"Juan Perez\",\n    \"email\": \"juan@gmail.com\"\n  },\n  \"productos\": [\n    {\n      \"nombre\": \"Laptop\",\n      \"cantidad\": 1,\n      \"precio\": 1200\n    }\n  ],\n  \"direccionEnvio\": {\n    \"calle\": \"Av. 68 con Cll 100\",\n    \"ciudad\": \"Bogota\"\n  }\n}"
+        },
+        "url": "http://localhost:3000/pedidos"
+      }
+    },
+    {
+      "name": "Ver pedido por id",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/pedidos/1"
+      }
+    },
+    {
+      "name": "Cambiar estado",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"estado\": \"En Proceso\"\n}"
+        },
+        "url": "http://localhost:3000/pedidos/1/estado"
+      }
+    },
+    {
+      "name": "Filtrar por estado",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/pedidos?estado=Pendiente"
+      }
+    },
+    {
+      "name": "Ordenar por fecha",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/pedidos?ordenarPor=fechaCreacion&direccion=desc"
+      }
+    }
+  ]
+}
